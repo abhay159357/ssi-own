@@ -4,7 +4,7 @@ import {
   CheckCircle, 
   Clock, 
   XCircle, 
-  Verify,
+  Shield,
   ShieldCheck,
   FileText
 } from 'lucide-react';
@@ -31,7 +31,7 @@ const StatsCard: React.FC<StatsCardProps> = ({ title, value, type }) => {
       case 'uses':
         return <ShieldCheck className="h-5 w-5 text-violet-500" />;
       default:
-        return <Verify className="h-5 w-5 text-slate-500" />;
+        return <Shield className="h-5 w-5 text-slate-500" />;
     }
   };
   
