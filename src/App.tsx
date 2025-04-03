@@ -15,6 +15,7 @@ import VerificationResult from "./pages/VerificationResult";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import TravelerDashboard from "./pages/TravelerDashboard";
 import { AnimatePresence } from "framer-motion";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
               <AnimatePresence mode="wait">
                 <Routes>
                   <Route path="/" element={<Index />} />
+                  <Route path="/dashboard" element={<TravelerDashboard />} />
                   <Route path="/wallet" element={<Wallet />} />
                   <Route path="/credential/:id" element={<CredentialDetail />} />
                   <Route path="/add-credential" element={<AddCredential />} />

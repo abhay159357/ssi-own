@@ -50,7 +50,7 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/wallet">
+            <Link to="/dashboard">
               <Button size="lg" className="gap-2 text-lg px-8">
                 <User className="h-5 w-5" />
                 <span>Traveler Dashboard</span>

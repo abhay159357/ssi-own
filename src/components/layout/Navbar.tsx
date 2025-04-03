@@ -14,7 +14,8 @@ import {
   ChevronDown,
   LogOut,
   Settings,
-  CreditCard
+  CreditCard,
+  LayoutDashboard
 } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import ThemeToggle from '@/components/shared/ThemeToggle';
@@ -44,7 +45,7 @@ const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   
   const travelerNavLinks = [
-    { name: 'Dashboard', path: '/', icon: Home },
+    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Wallet', path: '/wallet', icon: Wallet },
     { name: 'Add Credential', path: '/add-credential', icon: FileText },
     { name: 'Verify', path: '/verification', icon: Scan },
@@ -100,7 +101,7 @@ const Navbar: React.FC = () => {
                   <NavigationMenuContent>
                     <ul className="grid w-[200px] gap-1 p-2">
                       <li>
-                        <Link to="/">
+                        <Link to="/dashboard">
                           <NavigationMenuLink
                             className={cn(
                               "flex w-full items-center space-x-2 rounded-md p-2 text-sm hover:bg-secondary/80",
@@ -215,7 +216,7 @@ const Navbar: React.FC = () => {
               <div className="border-b border-border pb-2 mb-2">
                 <p className="px-3 py-2 text-sm font-medium text-muted-foreground">Switch Dashboard</p>
                 <Link
-                  to="/"
+                  to="/dashboard"
                   className={`flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium ${
                     !isAdminPage ? 'bg-secondary text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-secondary/70'
                   }`}
