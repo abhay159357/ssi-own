@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X, User, Shield, Wallet, Home } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
+import ThemeToggle from '@/components/shared/ThemeToggle';
 
 const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
