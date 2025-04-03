@@ -11,6 +11,7 @@ import Wallet from "./pages/Wallet";
 import CredentialDetail from "./pages/CredentialDetail";
 import AddCredential from "./pages/AddCredential";
 import Verification from "./pages/Verification";
+import VerificationResult from "./pages/VerificationResult";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -35,6 +36,7 @@ const App = () => (
                   <Route path="/credential/:id" element={<CredentialDetail />} />
                   <Route path="/add-credential" element={<AddCredential />} />
                   <Route path="/verification" element={<Verification />} />
+                  <Route path="/verification/result/:id" element={<VerificationResult />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="*" element={<NotFound />} />
