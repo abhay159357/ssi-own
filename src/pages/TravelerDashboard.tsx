@@ -99,25 +99,9 @@ const TravelerDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Recent credentials section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Recent credentials section - now full width */}
+      <div>
         <CredentialSummary credentials={recentCredentials} />
-        
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle>Upcoming Verifications</CardTitle>
-            <CardDescription>Scheduled identity verification requests</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {/* For now, just a placeholder */}
-            <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
-              <p className="text-muted-foreground mb-4">No upcoming verification requests</p>
-              <Link to="/verification">
-                <Button variant="outline">Start New Verification</Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </motion.div>
   );

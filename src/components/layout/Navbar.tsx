@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -6,13 +5,9 @@ import { Moon, Sun, Menu, X, User, Shield, Wallet, Home } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const Navbar: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
