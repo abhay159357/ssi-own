@@ -1,6 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import React from 'react';
 
 interface QRCodeProps {
   data: string;
@@ -8,31 +7,58 @@ interface QRCodeProps {
   title?: string;
 }
 
-const QRCode: React.FC<QRCodeProps> = ({ data, size = 200, title }) => {
-  const [qrCodeUrl, setQrCodeUrl] = useState<string>('');
-
-  useEffect(() => {
-    // In a real app, we would use a QR code library directly.
-    // For this demo, we'll use an external API
-    const encodedData = encodeURIComponent(data);
-    setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodedData}`);
-  }, [data, size]);
-
+const QRCode: React.FC<QRCodeProps> = ({ data, size = 180, title }) => {
+  // In a real application, this would use a QR code generation library
+  // For now we'll create a visual representation
   return (
-    <Card className="glass-card overflow-hidden">
-      <CardContent className="p-6 flex flex-col items-center">
-        {title && <p className="text-sm font-medium mb-4">{title}</p>}
-        <div className="bg-white p-3 rounded-lg shadow-sm">
-          <img 
-            src={qrCodeUrl} 
-            alt="QR Code" 
-            width={size} 
-            height={size} 
-            className="object-contain"
-          />
+    <div className="flex flex-col items-center">
+      <div 
+        className="border-4 border-primary rounded-lg p-3 bg-white"
+        style={{ width: `${size}px`, height: `${size}px` }}
+      >
+        <div className="w-full h-full bg-primary/5 rounded flex items-center justify-center">
+          <div className="space-y-1">
+            {/* This is a visual placeholder for a real QR code */}
+            <div className="flex space-x-1">
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+            </div>
+            <div className="flex space-x-1">
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-white rounded-sm border border-primary"></div>
+              <div className="w-4 h-4 bg-white rounded-sm border border-primary"></div>
+              <div className="w-4 h-4 bg-white rounded-sm border border-primary"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+            </div>
+            <div className="flex space-x-1">
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-white rounded-sm border border-primary"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-white rounded-sm border border-primary"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+            </div>
+            <div className="flex space-x-1">
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-white rounded-sm border border-primary"></div>
+              <div className="w-4 h-4 bg-white rounded-sm border border-primary"></div>
+              <div className="w-4 h-4 bg-white rounded-sm border border-primary"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+            </div>
+            <div className="flex space-x-1">
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+              <div className="w-4 h-4 bg-primary rounded-sm"></div>
+            </div>
+          </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+      {title && <p className="text-sm font-medium mt-2">{title}</p>}
+    </div>
   );
 };
 
