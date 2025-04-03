@@ -48,7 +48,11 @@ const Navbar: React.FC = () => {
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Wallet', path: '/wallet', icon: Wallet },
     { name: 'Add Credential', path: '/add-credential', icon: FileText },
+<<<<<<< HEAD
     { name: 'Verify', path: '/verification', icon: Scan },
+=======
+    // { name: 'Verify', path: '/verification', icon: Scan },
+>>>>>>> d4ad020 (add credentials button color change and verify section removed)
   ];
   
   const authorityNavLinks = [

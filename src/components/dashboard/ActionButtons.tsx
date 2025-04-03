@@ -17,7 +17,11 @@ const ActionButtons: React.FC = () => {
       label: 'Add Credential',
       icon: PlusCircle,
       onClick: () => navigate('/add-credential'),
+<<<<<<< HEAD
       color: 'bg-primary hover:bg-primary/90'
+=======
+      color: 'bg-yellow-300 hover:bg-primary/70'
+>>>>>>> d4ad020 (add credentials button color change and verify section removed)
     },
     {
       label: 'Verify Identity',
