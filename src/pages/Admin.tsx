@@ -1,15 +1,11 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, FileCheck, UserCheck, BarChart3, Settings, Scan, FileSearch } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Shield, FileCheck, FileSearch } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import IssueCredentialForm from '@/components/admin/IssueCredentialForm';
-import ManageIssuersForm from '@/components/admin/ManageIssuersForm';
-import CredentialTypesForm from '@/components/admin/CredentialTypesForm';
 import DocumentReview from '@/components/admin/DocumentReview';
-import QRValidator from '@/components/admin/QRValidator';
-import AdminAnalytics from '@/components/admin/AdminAnalytics';
 import SystemSettings from '@/components/admin/SystemSettings';
 
 const Admin = () => {
@@ -34,7 +30,7 @@ const Admin = () => {
       </div>
 
       <Tabs defaultValue="review" className="w-full">
-        <TabsList className="grid w-full grid-cols-7 mb-8">
+        <TabsList className="grid w-full grid-cols-3 mb-8">
           <TabsTrigger value="review" className="flex items-center gap-2">
             <FileSearch className="h-4 w-4" />
             <span>Document Review</span>
@@ -43,24 +39,8 @@ const Admin = () => {
             <FileCheck className="h-4 w-4" />
             <span>Issue Credentials</span>
           </TabsTrigger>
-          <TabsTrigger value="validate" className="flex items-center gap-2">
-            <Scan className="h-4 w-4" />
-            <span>QR Validation</span>
-          </TabsTrigger>
-          <TabsTrigger value="issuers" className="flex items-center gap-2">
-            <UserCheck className="h-4 w-4" />
-            <span>Manage Issuers</span>
-          </TabsTrigger>
-          <TabsTrigger value="types" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            <span>Credential Types</span>
-          </TabsTrigger>
-          <TabsTrigger value="analytics" className="flex items-center gap-2">
-            <BarChart3 className="h-4 w-4" />
-            <span>Analytics</span>
-          </TabsTrigger>
           <TabsTrigger value="settings" className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
+            <FileSearch className="h-4 w-4" />
             <span>Settings</span>
           </TabsTrigger>
         </TabsList>
@@ -89,62 +69,6 @@ const Admin = () => {
             </CardHeader>
             <CardContent>
               <IssueCredentialForm />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="validate" className="space-y-4">
-          <Card className="backdrop-blur-sm bg-card/50 border-primary/10">
-            <CardHeader>
-              <CardTitle>QR Code Validation</CardTitle>
-              <CardDescription>
-                Scan and validate QR codes presented by travelers
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <QRValidator />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="issuers" className="space-y-4">
-          <Card className="backdrop-blur-sm bg-card/50 border-primary/10">
-            <CardHeader>
-              <CardTitle>Manage Trusted Issuers</CardTitle>
-              <CardDescription>
-                Add or remove organizations that can issue credentials
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ManageIssuersForm />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="types" className="space-y-4">
-          <Card className="backdrop-blur-sm bg-card/50 border-primary/10">
-            <CardHeader>
-              <CardTitle>Credential Types</CardTitle>
-              <CardDescription>
-                Define the types of credentials that can be issued
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <CredentialTypesForm />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="analytics" className="space-y-4">
-          <Card className="backdrop-blur-sm bg-card/50 border-primary/10">
-            <CardHeader>
-              <CardTitle>Admin Analytics</CardTitle>
-              <CardDescription>
-                View statistics and reports on verification activities
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <AdminAnalytics />
             </CardContent>
           </Card>
         </TabsContent>
