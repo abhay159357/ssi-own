@@ -13,6 +13,16 @@ import { Textarea } from '@/components/ui/textarea';
 import { Plus, Trash2, Edit, Check, X, Eye, Award, Calendar } from 'lucide-react';
 import { toast } from 'sonner';
 
+// Define the type for a credential type
+interface CredentialType {
+  id: string;
+  name: string;
+  description: string;
+  hasExpiryDate: boolean;
+  isRevocable: boolean;
+  schemaDefinition: string;
+}
+
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Type name must be at least 2 characters' }),
   id: z.string().min(3, { message: 'ID must be at least 3 characters' }),
@@ -25,7 +35,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 // Mock initial data
-const initialTypes = [
+const initialTypes: CredentialType[] = [
   { 
     id: 'passport', 
     name: 'Passport', 
@@ -53,7 +63,7 @@ const initialTypes = [
 ];
 
 const CredentialTypesForm = () => {
-  const [types, setTypes] = useState(initialTypes);
+  const [types, setTypes] = useState<CredentialType[]>(initialTypes);
   const [editingTypeId, setEditingTypeId] = useState<string | null>(null);
   
   const form = useForm<FormValues>({
@@ -76,12 +86,22 @@ const CredentialTypesForm = () => {
       return;
     }
     
-    setTypes([...types, data]);
+    // Ensure all required fields have values
+    const newType: CredentialType = {
+      id: data.id,
+      name: data.name,
+      description: data.description || '',
+      hasExpiryDate: data.hasExpiryDate || false,
+      isRevocable: data.isRevocable || true,
+      schemaDefinition: data.schemaDefinition || '',
+    };
+    
+    setTypes([...types, newType]);
     toast.success('Credential type added successfully');
     form.reset();
   };
 
-  const startEditing = (type: typeof types[0]) => {
+  const startEditing = (type: CredentialType) => {
     setEditingTypeId(type.id);
     form.reset({
       name: type.name,
@@ -107,10 +127,20 @@ const CredentialTypesForm = () => {
 
   const saveEdit = () => {
     if (editingTypeId && form.formState.isValid) {
-      const updatedData = form.getValues();
+      const formData = form.getValues();
+      
+      // Ensure all required fields have values
+      const updatedType: CredentialType = {
+        id: formData.id,
+        name: formData.name,
+        description: formData.description || '',
+        hasExpiryDate: formData.hasExpiryDate || false,
+        isRevocable: formData.isRevocable || true,
+        schemaDefinition: formData.schemaDefinition || '',
+      };
       
       setTypes(types.map(type => 
-        type.id === editingTypeId ? { ...updatedData } : type
+        type.id === editingTypeId ? updatedType : type
       ));
       
       toast.success('Credential type updated successfully');

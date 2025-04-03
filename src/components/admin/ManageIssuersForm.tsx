@@ -10,6 +10,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Plus, Trash2, Edit, Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 
+// Define the type for an issuer
+interface Issuer {
+  id: string;
+  name: string;
+  description: string;
+  website: string;
+}
+
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Issuer name must be at least 2 characters' }),
   id: z.string().min(3, { message: 'ID must be at least 3 characters' }),
@@ -20,14 +28,14 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 // Mock initial data
-const initialIssuers = [
+const initialIssuers: Issuer[] = [
   { id: 'gov-immigration', name: 'Government Immigration', description: 'National immigration authority', website: 'https://immigration.gov' },
   { id: 'gov-transport', name: 'Transportation Authority', description: 'National driving license issuer', website: 'https://transport.gov' },
   { id: 'gov-education', name: 'Ministry of Education', description: 'Education certificate verification', website: 'https://education.gov' },
 ];
 
 const ManageIssuersForm = () => {
-  const [issuers, setIssuers] = useState(initialIssuers);
+  const [issuers, setIssuers] = useState<Issuer[]>(initialIssuers);
   const [editingIssuerId, setEditingIssuerId] = useState<string | null>(null);
   
   const form = useForm<FormValues>({
@@ -48,12 +56,20 @@ const ManageIssuersForm = () => {
       return;
     }
     
-    setIssuers([...issuers, data]);
+    // Ensure all required fields have values
+    const newIssuer: Issuer = {
+      id: data.id,
+      name: data.name,
+      description: data.description || '',
+      website: data.website || '',
+    };
+    
+    setIssuers([...issuers, newIssuer]);
     toast.success('Issuer added successfully');
     form.reset();
   };
 
-  const startEditing = (issuer: typeof issuers[0]) => {
+  const startEditing = (issuer: Issuer) => {
     setEditingIssuerId(issuer.id);
     form.reset({
       name: issuer.name,
@@ -75,10 +91,18 @@ const ManageIssuersForm = () => {
 
   const saveEdit = () => {
     if (editingIssuerId && form.formState.isValid) {
-      const updatedData = form.getValues();
+      const formData = form.getValues();
+      
+      // Ensure all required fields have values
+      const updatedIssuer: Issuer = {
+        id: formData.id,
+        name: formData.name,
+        description: formData.description || '',
+        website: formData.website || '',
+      };
       
       setIssuers(issuers.map(issuer => 
-        issuer.id === editingIssuerId ? { ...updatedData } : issuer
+        issuer.id === editingIssuerId ? updatedIssuer : issuer
       ));
       
       toast.success('Issuer updated successfully');
