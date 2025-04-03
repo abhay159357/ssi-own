@@ -11,7 +11,10 @@ import {
   X,
   Shield,
   ShieldAlert,
-  ChevronDown
+  ChevronDown,
+  LogOut,
+  Settings,
+  CreditCard
 } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import ThemeToggle from '@/components/shared/ThemeToggle';
@@ -25,6 +28,14 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from '@/lib/utils';
 
 const Navbar: React.FC = () => {
@@ -32,13 +43,20 @@ const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
-  const navLinks = [
+  const travelerNavLinks = [
     { name: 'Dashboard', path: '/', icon: Home },
     { name: 'Wallet', path: '/wallet', icon: Wallet },
     { name: 'Add Credential', path: '/add-credential', icon: FileText },
     { name: 'Verify', path: '/verification', icon: Scan },
+  ];
+  
+  const authorityNavLinks = [
+    { name: 'Admin Dashboard', path: '/admin', icon: ShieldAlert },
+  ];
+  
+  const accountLinks = [
     { name: 'Profile', path: '/profile', icon: User },
-    { name: 'Admin', path: '/admin', icon: ShieldAlert },
+    { name: 'Settings', path: '/settings', icon: Settings },
   ];
 
   useEffect(() => {
@@ -52,6 +70,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   const isActive = (path: string) => location.pathname === path;
+  const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
     <nav className={cn(
@@ -72,8 +91,46 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center space-x-1">
             <NavigationMenu>
               <NavigationMenuList>
-                {/* Main navigation */}
-                {navLinks.slice(0, 4).map((link) => (
+                {/* Dashboard Type Selector */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="flex items-center space-x-1 px-3 py-2 text-sm font-medium">
+                    <Shield className="h-4 w-4 mr-1" />
+                    <span>{isAdminPage ? "Authority" : "Traveler"}</span>
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-1 p-2">
+                      <li>
+                        <Link to="/">
+                          <NavigationMenuLink
+                            className={cn(
+                              "flex w-full items-center space-x-2 rounded-md p-2 text-sm hover:bg-secondary/80",
+                              !isAdminPage && "bg-secondary"
+                            )}
+                          >
+                            <CreditCard className="h-4 w-4" />
+                            <span>Traveler Dashboard</span>
+                          </NavigationMenuLink>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/admin">
+                          <NavigationMenuLink
+                            className={cn(
+                              "flex w-full items-center space-x-2 rounded-md p-2 text-sm hover:bg-secondary/80",
+                              isAdminPage && "bg-secondary"
+                            )}
+                          >
+                            <ShieldAlert className="h-4 w-4" />
+                            <span>Authority Dashboard</span>
+                          </NavigationMenuLink>
+                        </Link>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                
+                {/* Main navigation links based on current dashboard */}
+                {(isAdminPage ? authorityNavLinks : travelerNavLinks).map((link) => (
                   <NavigationMenuItem key={link.path}>
                     <Link to={link.path}>
                       <NavigationMenuLink
@@ -90,38 +147,39 @@ const Navbar: React.FC = () => {
                     </Link>
                   </NavigationMenuItem>
                 ))}
-                
-                {/* Account dropdown */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="flex items-center space-x-1 px-3 py-2 text-sm font-medium">
-                    <User className="h-4 w-4 mr-1" />
-                    <span>Account</span>
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[200px] gap-1 p-2">
-                      {navLinks.slice(4).map((link) => (
-                        <li key={link.path}>
-                          <Link to={link.path}>
-                            <NavigationMenuLink
-                              className={cn(
-                                "flex w-full items-center space-x-2 rounded-md p-2 text-sm hover:bg-secondary/80",
-                                isActive(link.path) && "bg-secondary"
-                              )}
-                            >
-                              <link.icon className="h-4 w-4" />
-                              <span>{link.name}</span>
-                            </NavigationMenuLink>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
             
-            <div className="ml-3">
+            <div className="ml-3 flex items-center space-x-2">
               <ThemeToggle />
+              
+              {/* User Account Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="relative h-8 w-8 rounded-full">
+                    <div className="flex h-full w-full items-center justify-center rounded-full bg-secondary text-muted-foreground">
+                      <User className="h-4 w-4" />
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {accountLinks.map((link) => (
+                    <DropdownMenuItem key={link.path} asChild>
+                      <Link to={link.path} className="flex items-center">
+                        <link.icon className="mr-2 h-4 w-4" />
+                        <span>{link.name}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
           
@@ -154,21 +212,77 @@ const Navbar: React.FC = () => {
             transition={{ duration: 0.2 }}
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navLinks.map((link) => (
+              <div className="border-b border-border pb-2 mb-2">
+                <p className="px-3 py-2 text-sm font-medium text-muted-foreground">Switch Dashboard</p>
                 <Link
-                  key={link.path}
-                  to={link.path}
+                  to="/"
                   className={`flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium ${
-                    isActive(link.path)
-                      ? 'bg-secondary text-primary'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/70'
+                    !isAdminPage ? 'bg-secondary text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-secondary/70'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <link.icon className="h-5 w-5" />
-                  <span>{link.name}</span>
+                  <CreditCard className="h-5 w-5" />
+                  <span>Traveler Dashboard</span>
                 </Link>
-              ))}
+                <Link
+                  to="/admin"
+                  className={`flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium ${
+                    isAdminPage ? 'bg-secondary text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-secondary/70'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <ShieldAlert className="h-5 w-5" />
+                  <span>Authority Dashboard</span>
+                </Link>
+              </div>
+              
+              <div className="border-b border-border pb-2 mb-2">
+                <p className="px-3 py-2 text-sm font-medium text-muted-foreground">
+                  {isAdminPage ? "Authority Navigation" : "Traveler Navigation"}
+                </p>
+                {(isAdminPage ? authorityNavLinks : travelerNavLinks).map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium ${
+                      isActive(link.path)
+                        ? 'bg-secondary text-primary'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-secondary/70'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <link.icon className="h-5 w-5" />
+                    <span>{link.name}</span>
+                  </Link>
+                ))}
+              </div>
+              
+              <div>
+                <p className="px-3 py-2 text-sm font-medium text-muted-foreground">Account</p>
+                {accountLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium ${
+                      isActive(link.path)
+                        ? 'bg-secondary text-primary'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-secondary/70'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <link.icon className="h-5 w-5" />
+                    <span>{link.name}</span>
+                  </Link>
+                ))}
+                <Link
+                  to="/logout"
+                  className="flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/70"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span>Log out</span>
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}
