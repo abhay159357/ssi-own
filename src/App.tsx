@@ -12,6 +12,7 @@ import CredentialDetail from "./pages/CredentialDetail";
 import AddCredential from "./pages/AddCredential";
 import Verification from "./pages/Verification";
 import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import { AnimatePresence } from "framer-motion";
 
@@ -35,6 +36,7 @@ const App = () => (
                   <Route path="/add-credential" element={<AddCredential />} />
                   <Route path="/verification" element={<Verification />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/admin" element={<Admin />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </AnimatePresence>

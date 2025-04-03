@@ -9,7 +9,8 @@ import {
   User, 
   Menu, 
   X,
-  Shield 
+  Shield,
+  ShieldAlert
 } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import ThemeToggle from '@/components/shared/ThemeToggle';
@@ -24,6 +25,7 @@ const Navbar: React.FC = () => {
     { name: 'Add Credential', path: '/add-credential', icon: FileText },
     { name: 'Verify', path: '/verification', icon: Scan },
     { name: 'Profile', path: '/profile', icon: User },
+    { name: 'Admin', path: '/admin', icon: ShieldAlert },
   ];
 
   const isActive = (path: string) => location.pathname === path;
